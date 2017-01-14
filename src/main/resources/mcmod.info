@@ -1,12 +1,12 @@
 [
 	{
-	  "modid": "Funnels",
-	  "name": "Funnels",
+	  "modid": "extrahoppers",
+	  "name": "Extra Hoppers",
 	  "version": "$version",
 	  "mcversion": "$mcversion",
-	  "description": "Fantastic Fluid funnels",
+	  "description": "Extra hoppers and Fantastic Fluid Funnels™",
 	  "credits": "",
-	  "url": "https://github.com/shadowfacts/Funnels",
+	  "url": "https://github.com/shadowfacts/ExtraHoppers",
 	  "updateUrl": "",
 	  "authorList": [ "shadowfacts" ],
 	  "screenshots": []
