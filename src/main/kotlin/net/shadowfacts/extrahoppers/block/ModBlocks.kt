@@ -2,6 +2,7 @@ package net.shadowfacts.extrahoppers.block
 
 import net.minecraft.block.Block
 import net.shadowfacts.extrahoppers.block.fluid.BlockFluidHopper
+import net.shadowfacts.extrahoppers.block.wooden.BlockWoodenHopper
 import net.shadowfacts.shadowmc.block.ModBlocks
 
 /**
@@ -10,9 +11,11 @@ import net.shadowfacts.shadowmc.block.ModBlocks
 object ModBlocks: ModBlocks() {
 
 	val fluidHopper = BlockFluidHopper()
+	val woodenHopper = BlockWoodenHopper()
 
 	override fun init() {
 		register(fluidHopper)
+		register(woodenHopper)
 	}
 
 	override fun <T: Block> register(block: T): T {

@@ -1,5 +1,6 @@
 tile.extrahoppers:fluid_hopper.name=Fluid Hopper
 tile.extrahoppers:fluid_hopper.tooltip=Formerly the Funnel
+tile.extrahoppers:wooden_hopper.name=Wooden Hopper
 
 extrahoppers.config.gui.title=Extra Hoppers Config
 extrahoppers.config.gui.category.general=General

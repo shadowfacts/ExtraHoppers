@@ -11,6 +11,7 @@ object ModRecipes {
 
 	fun init() {
 		GameRegistry.addRecipe(ShapedOreRecipe(ExtraHoppers.blocks.fluidHopper, "I I", "I I", " B ", 'I', "ingotIron", 'B', Items.BUCKET))
+		GameRegistry.addRecipe(ShapedOreRecipe(ExtraHoppers.blocks.woodenHopper, "W W", "W W", " W ", 'W', "plankWood"))
 	}
 
 }
