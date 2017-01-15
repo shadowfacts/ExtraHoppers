@@ -11,7 +11,7 @@ import net.minecraft.util.EnumHand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.fluids.FluidUtil
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY
 import net.minecraftforge.fml.common.registry.GameRegistry
 import net.shadowfacts.extrahoppers.ExtraHoppers
 import net.shadowfacts.extrahoppers.block.base.BlockHopperBase
@@ -20,7 +20,7 @@ import net.shadowfacts.extrahoppers.gui.GUIHandler
 /**
  * @author shadowfacts
  */
-class BlockFluidHopper: BlockHopperBase<TileEntityFluidHopper>("fluid_hopper", material = Material.IRON) {
+open class BlockFluidHopper(name: String = "fluid_hopper", material: Material = Material.IRON): BlockHopperBase<TileEntityFluidHopper>(name, material = material) {
 
 	init {
 		setHardness(3.5f)
@@ -34,14 +34,13 @@ class BlockFluidHopper: BlockHopperBase<TileEntityFluidHopper>("fluid_hopper", m
 		} else {
 			val te = getTileEntity(world, pos)
 			val stack = player.getHeldItem(hand)
-			val result = FluidUtil.interactWithFluidHandler(stack, te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.NORTH), player)
+			val result = FluidUtil.interactWithFluidHandler(stack, te.getCapability(FLUID_HANDLER_CAPABILITY, EnumFacing.NORTH), player)
 			if (result.isSuccess) {
 				player.setHeldItem(hand, result.getResult())
 				te.save()
-				return true
 			}
 		}
-		return false
+		return true
 	}
 
 	override fun addInformation(stack: ItemStack, player: EntityPlayer, tooltip: MutableList<String>, advanced: Boolean) {

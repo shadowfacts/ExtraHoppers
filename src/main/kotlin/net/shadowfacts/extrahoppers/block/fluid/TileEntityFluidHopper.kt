@@ -4,7 +4,11 @@ import net.minecraft.block.BlockLiquid
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.ITickable
+import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.fluids.Fluid.BUCKET_VOLUME
+import net.minecraftforge.fluids.FluidStack
+import net.minecraftforge.fluids.FluidTank
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY
 import net.minecraftforge.fluids.capability.IFluidHandler
 import net.minecraftforge.fml.common.network.NetworkRegistry
@@ -13,24 +17,26 @@ import net.shadowfacts.extrahoppers.EHConfig
 import net.shadowfacts.extrahoppers.block.base.TileEntityHopperBase
 import net.shadowfacts.shadowmc.ShadowMC
 import net.shadowfacts.shadowmc.capability.CapHolder
-import net.shadowfacts.shadowmc.fluid.FluidTank
-import net.shadowfacts.shadowmc.nbt.AutoSerializeNBT
 import net.shadowfacts.shadowmc.network.PacketRequestTEUpdate
 import net.shadowfacts.shadowmc.network.PacketUpdateTE
 
 /**
  * @author shadowfacts
  */
-class TileEntityFluidHopper: TileEntityHopperBase(), ITickable {
+open class TileEntityFluidHopper: TileEntityHopperBase(), ITickable {
 
 	companion object {
 		val HANDLER_COOLDOWN = 8
 		val WORLD_COOLDOWN = 40
 	}
 
-	@AutoSerializeNBT
-	@CapHolder(capabilities = arrayOf(IFluidHandler::class))
-	internal var tank = FluidTank(EHConfig.fhSize)
+	internal var tank = object: FluidTank(EHConfig.fhSize) {
+		override fun canFillFluidType(fluid: FluidStack): Boolean {
+			return fluidValiator(fluid)
+		}
+	}
+
+	protected open val fluidValiator: (FluidStack) -> Boolean = { true }
 
 	private var handlerCooldown: Int = HANDLER_COOLDOWN
 	private var worldCooldown: Int = WORLD_COOLDOWN
@@ -112,7 +118,7 @@ class TileEntityFluidHopper: TileEntityHopperBase(), ITickable {
 		if (EHConfig.fhPickupWorldFluids && tank.fluidAmount <= tank.capacity - BUCKET_VOLUME) {
 			if (FluidUtils.isFluidBlock(world, pos.up())) {
 				val toDrain = FluidUtils.drainFluidBlock(world, pos.up(), false)!!
-				if (toDrain.amount <= tank.capacity - tank.fluidAmount) {
+				if (toDrain.amount <= tank.capacity - tank.fluidAmount && tank.fill(toDrain, false) === 1000) {
 					tank.fill(FluidUtils.drainFluidBlock(world, pos.up(), true), true)
 					return true
 				}
@@ -151,6 +157,16 @@ class TileEntityFluidHopper: TileEntityHopperBase(), ITickable {
 		handlerCooldown = tag.getInteger("handlerCooldown")
 		worldCooldown = tag.getInteger("worldCooldown")
 		super.readFromNBT(tag)
+	}
+
+	override fun hasCapability(capability: Capability<*>, facing: EnumFacing?): Boolean {
+		if (capability == FLUID_HANDLER_CAPABILITY) return true
+		else return super.hasCapability(capability, facing)
+	}
+
+	override fun <T: Any?> getCapability(capability: Capability<T>, facing: EnumFacing?): T? {
+		if (capability == FLUID_HANDLER_CAPABILITY) return tank as T
+		else return super.getCapability(capability, facing)
 	}
 
 }

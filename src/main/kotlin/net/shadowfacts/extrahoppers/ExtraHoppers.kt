@@ -1,6 +1,7 @@
 package net.shadowfacts.extrahoppers
 
 import net.minecraft.item.Item
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.client.registry.ClientRegistry
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent
@@ -12,6 +13,8 @@ import net.minecraftforge.fml.relauncher.SideOnly
 import net.shadowfacts.extrahoppers.block.ModBlocks
 import net.shadowfacts.extrahoppers.block.fluid.TileEntityFluidHopper
 import net.shadowfacts.extrahoppers.block.fluid.TESRFluidHopper
+import net.shadowfacts.extrahoppers.block.wooden_fluid.TileEntityWoodenFluidHopper
+import net.shadowfacts.extrahoppers.event.ClientEventHandler
 import net.shadowfacts.extrahoppers.gui.GUIHandler
 
 /**
@@ -39,6 +42,9 @@ object ExtraHoppers {
 	@SideOnly(Side.CLIENT)
 	fun preInitClient(event: FMLPreInitializationEvent) {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluidHopper::class.java, TESRFluidHopper)
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWoodenFluidHopper::class.java, TESRFluidHopper)
+
+		MinecraftForge.EVENT_BUS.register(ClientEventHandler)
 	}
 
 	@Mod.EventHandler

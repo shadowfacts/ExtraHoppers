@@ -17,9 +17,11 @@ object EHConfig {
 //	Fluid Hopper
 	var fhSize: Int by ConfigInt("fluidHopper", "size", 1000, 1000, 64000, "The size (in millibuckets) of the Fluid Hopper")
 
-	var fhPickupWorldFluids: Boolean by ConfigBool("fluidHopper", "fhPickupWorldFluids", true, "If the Fluid Hopper should pickup fluids placed in the world directly above it.")
+	var fhPickupWorldFluids: Boolean by ConfigBool("fluidHopper", "pickupWorldFluids", true, "If the Fluid Hopper should pickup fluids placed in the world directly above it.")
 
-	var fhPlaceFluidsInWorld: Boolean by ConfigBool("fluidHopper", "fhPlaceFluidsInWorld", true, "If the Fluid Hopper should place fluids in the world directly in front of it.")
+	var fhPlaceFluidsInWorld: Boolean by ConfigBool("fluidHopper", "placeFluidsInWorld", true, "If the Fluid Hopper should place fluids in the world directly in front of it.")
+
+	var wfhMaxTemperature: Int by ConfigInt("woodenFluidHopper", "maxTemperature", 400, 0, Integer.MAX_VALUE, "The maximum temperature (in Kelvin) of the fluid that can be help by the Wooden Fluid Hopper.")
 
 	fun init(configDir: File) {
 		config = Configuration(File(configDir, "shadowfacts/ExtraHoppers.cfg"))
