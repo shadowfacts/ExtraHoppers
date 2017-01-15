@@ -1,10 +1,12 @@
 package net.shadowfacts.extrahoppers.block.wooden
 
+import net.minecraft.entity.item.EntityItem
 import net.minecraft.inventory.IInventory
 import net.minecraft.inventory.ISidedInventory
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.ITickable
+import net.minecraft.util.math.AxisAlignedBB
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY
 import net.minecraftforge.items.ItemStackHandler
@@ -52,7 +54,7 @@ class TileEntityWoodenHopper: TileEntityHopperBase(), ITickable {
 					val remainder = tile.insert(inventory.extractItem(0, 1, true), i)
 					if (remainder.isEmpty) {
 						inventory.extractItem(0, 1, false)
-						break
+						return true
 					}
 				}
 				return true
@@ -61,7 +63,7 @@ class TileEntityWoodenHopper: TileEntityHopperBase(), ITickable {
 					val remainder = tile.insert(inventory.extractItem(0, 1, true), i)
 					if (remainder.isEmpty) {
 						inventory.extractItem(0, 1, false)
-						break
+						return true
 					}
 				}
 				return true
@@ -71,16 +73,29 @@ class TileEntityWoodenHopper: TileEntityHopperBase(), ITickable {
 					val remainder = handler.insertItem(i, inventory.extractItem(0, 1, true), false)
 					if (remainder.isEmpty) {
 						inventory.extractItem(0, 1, false)
-						break
+						return true
 					}
 				}
-				return true
 			}
 		}
 		return false
 	}
 
 	private fun pull(): Boolean {
+		val items = world.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB(pos.x.toDouble(), pos.y + 0.5, pos.z.toDouble(), pos.x + 1.0, pos.y + 1.5, pos.z + 1.0))
+		for (item in items) {
+			val result = inventory.insertItem(0, item.entityItem, true)
+			if (result.count != item.entityItem.count) {
+				inventory.insertItem(0, item.entityItem, false)
+				if (result.isEmpty) {
+					item.setDead()
+				} else {
+					item.setEntityItemStack(result)
+				}
+				return true
+			}
+		}
+
 		val tile = world.getTileEntity(pos.up())
 
 		if (tile is ISidedInventory) {
@@ -93,7 +108,7 @@ class TileEntityWoodenHopper: TileEntityHopperBase(), ITickable {
 					val remainder = inventory.insertItem(0, copy, false)
 					if (remainder.isEmpty) {
 						current.shrink(1)
-						break
+						return true
 					}
 				}
 			}
@@ -106,7 +121,7 @@ class TileEntityWoodenHopper: TileEntityHopperBase(), ITickable {
 					val remainder = inventory.insertItem(0, copy, false)
 					if (remainder.isEmpty) {
 						current.shrink(1)
-						break
+						return true
 					}
 				}
 			}
@@ -116,7 +131,7 @@ class TileEntityWoodenHopper: TileEntityHopperBase(), ITickable {
 				val remainder = inventory.insertItem(0, handler.extractItem(i, 1, true), false)
 				if (remainder.isEmpty) {
 					handler.extractItem(i, 1, false)
-					break
+					return true
 				}
 			}
 		}
