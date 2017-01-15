@@ -15,6 +15,7 @@ import net.shadowfacts.shadowmc.ShadowMC
 import net.shadowfacts.shadowmc.capability.CapHolder
 import net.shadowfacts.shadowmc.fluid.FluidTank
 import net.shadowfacts.shadowmc.nbt.AutoSerializeNBT
+import net.shadowfacts.shadowmc.network.PacketRequestTEUpdate
 import net.shadowfacts.shadowmc.network.PacketUpdateTE
 
 /**
@@ -37,6 +38,12 @@ class TileEntityFluidHopper: TileEntityHopperBase(), ITickable {
 	internal fun save() {
 		markDirty()
 		ShadowMC.network.sendToAllAround(PacketUpdateTE(this), NetworkRegistry.TargetPoint(world.provider.dimension, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), 64.0))
+	}
+
+	override fun onLoad() {
+		if (world.isRemote) {
+			ShadowMC.network.sendToServer(PacketRequestTEUpdate(this))
+		}
 	}
 
 	override fun update() {
