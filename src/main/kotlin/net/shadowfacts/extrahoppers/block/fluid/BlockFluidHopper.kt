@@ -13,7 +13,9 @@ import net.minecraft.world.World
 import net.minecraftforge.fluids.FluidUtil
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler
 import net.minecraftforge.fml.common.registry.GameRegistry
+import net.shadowfacts.extrahoppers.ExtraHoppers
 import net.shadowfacts.extrahoppers.block.base.BlockHopperBase
+import net.shadowfacts.extrahoppers.gui.GUIHandler
 
 /**
  * @author shadowfacts
@@ -27,8 +29,9 @@ class BlockFluidHopper: BlockHopperBase<TileEntityFluidHopper>("fluid_hopper", m
 	}
 
 	override fun onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, hand: EnumHand, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-//		TODO: GUI
-		if (!player.isSneaking) {
+		if (player.isSneaking) {
+			player.openGui(ExtraHoppers, GUIHandler.FLUID_HOPPER, world, pos.x, pos.y, pos.z)
+		} else {
 			val te = getTileEntity(world, pos)
 			val stack = player.getHeldItem(hand)
 			val result = FluidUtil.interactWithFluidHandler(stack, te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.NORTH), player)
