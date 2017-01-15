@@ -7,7 +7,7 @@ import net.shadowfacts.extrahoppers.MOD_ID
 import net.shadowfacts.extrahoppers.block.fluid.TileEntityFluidHopper
 import net.shadowfacts.extrahoppers.gui.GUIHandler
 import net.shadowfacts.extrahoppers.gui.element.UIFluidIndicator
-import net.shadowfacts.shadowmc.ui.dsl.*
+import net.shadowfacts.shadowmc.ui.dsl.container
 
 /**
  * @author shadowfacts

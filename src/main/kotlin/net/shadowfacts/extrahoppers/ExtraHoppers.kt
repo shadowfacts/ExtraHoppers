@@ -11,8 +11,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import net.shadowfacts.extrahoppers.block.ModBlocks
-import net.shadowfacts.extrahoppers.block.fluid.TileEntityFluidHopper
 import net.shadowfacts.extrahoppers.block.fluid.TESRFluidHopper
+import net.shadowfacts.extrahoppers.block.fluid.TileEntityFluidHopper
 import net.shadowfacts.extrahoppers.block.wooden_fluid.TileEntityWoodenFluidHopper
 import net.shadowfacts.extrahoppers.event.ClientEventHandler
 import net.shadowfacts.extrahoppers.gui.GUIHandler

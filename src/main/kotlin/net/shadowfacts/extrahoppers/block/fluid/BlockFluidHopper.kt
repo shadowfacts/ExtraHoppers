@@ -12,7 +12,6 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.fluids.FluidUtil
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY
-import net.minecraftforge.fml.common.registry.GameRegistry
 import net.shadowfacts.extrahoppers.ExtraHoppers
 import net.shadowfacts.extrahoppers.block.base.BlockHopperBase
 import net.shadowfacts.extrahoppers.gui.GUIHandler
@@ -20,7 +19,7 @@ import net.shadowfacts.extrahoppers.gui.GUIHandler
 /**
  * @author shadowfacts
  */
-open class BlockFluidHopper(name: String = "fluid_hopper", material: Material = Material.IRON): BlockHopperBase<TileEntityFluidHopper>(name, material = material) {
+open class BlockFluidHopper(inverted: Boolean, name: String = "fluid_hopper", material: Material = Material.IRON): BlockHopperBase<TileEntityFluidHopper>(inverted, name, material = material) {
 
 	init {
 		setHardness(3.5f)
@@ -44,15 +43,11 @@ open class BlockFluidHopper(name: String = "fluid_hopper", material: Material = 
 	}
 
 	override fun addInformation(stack: ItemStack, player: EntityPlayer, tooltip: MutableList<String>, advanced: Boolean) {
-		tooltip.add(I18n.format("$unlocalizedName.tooltip"))
-	}
-
-	override fun registerTileEntity() {
-		GameRegistry.registerTileEntityWithAlternatives(TileEntityFluidHopper::class.java, registryName.toString(), "funnels:funnel")
+		tooltip.add(I18n.format("tile.extrahoppers:fluid_hopper.tooltip"))
 	}
 
 	override fun createTileEntity(world: World, state: IBlockState): TileEntityFluidHopper {
-		return TileEntityFluidHopper()
+		return TileEntityFluidHopper(inverted)
 	}
 
 }

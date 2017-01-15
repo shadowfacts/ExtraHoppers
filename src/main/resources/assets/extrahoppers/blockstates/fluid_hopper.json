@@ -6,6 +6,9 @@
 			"transform": "forge:default-block"
 		},
 		"facing": {
+			"up": {
+				"model": "hopper_down"
+			},
 			"down": {
 				"model": "hopper_down"
 			},

@@ -19,8 +19,6 @@ abstract class BlockTE<out TE: BaseTileEntity>(name: String, material: Material 
 		setCreativeTab(EHCreativeTab)
 	}
 
-	abstract fun registerTileEntity()
-
 	abstract override fun createTileEntity(world: World, state: IBlockState): TE
 
 	override fun hasTileEntity(state: IBlockState): Boolean {

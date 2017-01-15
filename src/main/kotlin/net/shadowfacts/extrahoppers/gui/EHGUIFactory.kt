@@ -3,7 +3,6 @@ package net.shadowfacts.extrahoppers.gui
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
 import net.minecraftforge.fml.client.IModGuiFactory
-import net.shadowfacts.extrahoppers.gui.EHConfigGUI
 
 /**
  * @author shadowfacts

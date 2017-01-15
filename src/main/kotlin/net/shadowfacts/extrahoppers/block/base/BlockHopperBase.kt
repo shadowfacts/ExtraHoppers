@@ -18,10 +18,10 @@ import net.shadowfacts.shadowmc.tileentity.BaseTileEntity
 /**
  * @author shadowfacts
  */
-abstract class BlockHopperBase<out TE: BaseTileEntity>(name: String, material: Material = Material.ROCK): BlockTE<TE>(name, material = material) {
+abstract class BlockHopperBase<out TE: BaseTileEntity>(val inverted: Boolean, name: String, material: Material = Material.ROCK): BlockTE<TE>(if (inverted) "inverted_$name" else name, material = material) {
 
 	companion object {
-		val FACING: PropertyDirection = PropertyDirection.create("facing") { side -> side != EnumFacing.UP }
+		val FACING: PropertyDirection = PropertyDirection.create("facing")
 
 		val BASE_AABB = AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 0.625, 1.0)
 		val SOUTH_AABB = AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 1.0, 0.125)
@@ -63,7 +63,11 @@ abstract class BlockHopperBase<out TE: BaseTileEntity>(name: String, material: M
 
 	override fun getStateForPlacement(world: World, pos: BlockPos, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase, hand: EnumHand): IBlockState {
 		var side = facing.opposite
-		if (side == EnumFacing.UP) side = EnumFacing.DOWN
+		if (inverted) {
+			if (side == EnumFacing.DOWN) side = EnumFacing.UP
+		} else {
+			if (side == EnumFacing.UP) side = EnumFacing.DOWN
+		}
 		return defaultState.withProperty(FACING, side)
 	}
 

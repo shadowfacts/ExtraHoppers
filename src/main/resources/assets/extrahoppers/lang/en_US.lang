@@ -1,9 +1,15 @@
+tile.extrahoppers:inverted_hopper.name=Inverted Hopper
 tile.extrahoppers:fluid_hopper.name=Fluid Hopper
 tile.extrahoppers:fluid_hopper.tooltip=Formerly the Funnel
+tile.extrahoppers:inverted_fluid_hopper.name=Inverted Fluid Hopper
 tile.extrahoppers:wooden_hopper.name=Wooden Hopper
+tile.extrahoppers:inverted_wooden_hopper.name=Inverted Wooden Hopper
 tile.extrahoppers:wooden_fluid_hopper.name=Wooden Fluid Hopper
+tile.extrahoppers:inverted_wooden_fluid_hopper.name=Inverted Wooden Fluid Hopper
 
 extrahoppers.wooden_fluid_hopper.temperature=Temperature: %s%dK
 
 extrahoppers.config.gui.title=Extra Hoppers Config
-extrahoppers.config.gui.category.general=General
+extrahoppers.config.gui.category.fluidhopper=Fluid Hopper
+
+itemGroup.extrahoppers=Extra Hoppers

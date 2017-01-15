@@ -5,7 +5,7 @@ import net.minecraft.inventory.Container
 import net.minecraft.util.ResourceLocation
 import net.shadowfacts.extrahoppers.MOD_ID
 import net.shadowfacts.extrahoppers.gui.element.UIFluidIndicator
-import net.shadowfacts.shadowmc.ui.dsl.*
+import net.shadowfacts.shadowmc.ui.dsl.container
 
 /**
  * @author shadowfacts

@@ -1,4 +1,4 @@
-package net.shadowfacts.extrahoppers.block.wooden
+package net.shadowfacts.extrahoppers.block.inverted
 
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
@@ -15,21 +15,21 @@ import net.shadowfacts.extrahoppers.gui.GUIHandler
 /**
  * @author shadowfacts
  */
-class BlockWoodenHopper(inverted: Boolean): BlockHopperBase<TileEntityWoodenHopper>(inverted, "wooden_hopper", Material.WOOD) {
+class BlockInvertedHopper: BlockHopperBase<TileEntityInvertedHopper>(true, "hopper", Material.IRON) {
 
 	init {
-		setHardness(1.5f)
-		setResistance(4f)
-		soundType = SoundType.WOOD
+		setHardness(3.5f)
+		setResistance(8f)
+		soundType = SoundType.METAL
 	}
 
 	override fun onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-		player.openGui(ExtraHoppers, GUIHandler.WOODEN_HOPPER, world, pos.x, pos.y, pos.z)
+		player.openGui(ExtraHoppers, GUIHandler.INVERTED_HOPPER, world, pos.x, pos.y, pos.z)
 		return true
 	}
 
-	override fun createTileEntity(world: World, state: IBlockState): TileEntityWoodenHopper {
-		return TileEntityWoodenHopper()
+	override fun createTileEntity(world: World, state: IBlockState): TileEntityInvertedHopper {
+		return TileEntityInvertedHopper()
 	}
 
 }

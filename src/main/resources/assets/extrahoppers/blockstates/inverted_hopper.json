@@ -1,0 +1,32 @@
+{
+	"forge_marker": 1,
+	"variants": {
+		"inventory": {
+			"model": "extrahoppers:hopper_up",
+			"transform": "forge:default-block"
+		},
+		"facing": {
+			"up": {
+				"model": "extrahoppers:hopper_up"
+			},
+			"down": {
+				"model": "extrahoppers:hopper_up"
+			},
+			"north": {
+				"model": "extrahoppers:inverted_hopper_side"
+			},
+			"south": {
+				"model": "extrahoppers:inverted_hopper_side",
+				"y": 180
+			},
+			"west": {
+				"model": "extrahoppers:inverted_hopper_side",
+				"y": 270
+			},
+			"east": {
+				"model": "extrahoppers:inverted_hopper_side",
+				"y": 90
+			}
+		}
+	}
+}

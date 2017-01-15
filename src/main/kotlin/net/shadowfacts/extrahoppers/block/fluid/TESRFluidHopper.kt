@@ -3,14 +3,10 @@ package net.shadowfacts.extrahoppers.block.fluid
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.Tessellator
-import net.minecraft.client.renderer.VertexBuffer
-import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats
 import net.minecraft.util.EnumFacing
-import net.minecraftforge.fluids.FluidStack
-import net.shadowfacts.extrahoppers.block.fluid.TileEntityFluidHopper
 import net.shadowfacts.shadowmc.util.RenderHelper
 import org.lwjgl.opengl.GL11
 
@@ -20,7 +16,9 @@ import org.lwjgl.opengl.GL11
 object TESRFluidHopper: TileEntitySpecialRenderer<TileEntityFluidHopper>() {
 
 	override fun renderTileEntityAt(te: TileEntityFluidHopper, x: Double, y: Double, z: Double, partialTicks: Float, destroyStage: Int) {
-		if (te.tank.fluid != null && !te.world.getBlockState(te.pos.up()).isSideSolid(te.world, te.pos.up(), EnumFacing.DOWN)) {
+		val pos = if (te.inverted) te.pos.down() else te.pos.up()
+
+		if (te.tank.fluid != null && !te.world.getBlockState(pos).isSideSolid(te.world, pos, EnumFacing.DOWN)) {
 			val fluid = te.tank.fluid
 
 			val tessellator = Tessellator.getInstance()
@@ -46,7 +44,7 @@ object TESRFluidHopper: TileEntitySpecialRenderer<TileEntityFluidHopper>() {
 
 			val still = Minecraft.getMinecraft().textureMapBlocks.getAtlasSprite(fluid.fluid.getStill(fluid).toString())
 
-			RenderHelper.putTexturedQuad(renderer, still, 2 / 16.0, 14 / 16.0, 2 / 16.0, 12 / 16.0, 0.0, 12 / 16.0, EnumFacing.UP, color, brightness)
+			RenderHelper.putTexturedQuad(renderer, still, 2 / 16.0, 14 / 16.0, 2 / 16.0, 12 / 16.0, 0.0, 12 / 16.0, if (te.inverted) EnumFacing.DOWN else EnumFacing.UP, color, brightness)
 
 			tessellator.draw()
 

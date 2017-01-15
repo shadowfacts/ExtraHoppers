@@ -9,8 +9,7 @@ import net.minecraft.item.ItemStack
 object EHCreativeTab: CreativeTabs(MOD_ID) {
 
 	override fun getTabIconItem(): ItemStack {
-		return ItemStack(ExtraHoppers.blocks.fluidHopper)
-//		TODO: change me to the wooden hopper
+		return ItemStack(ExtraHoppers.blocks.woodenHopper)
 	}
 
 }

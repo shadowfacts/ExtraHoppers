@@ -25,7 +25,7 @@ class TileEntityWoodenHopper: TileEntityHopperBase(), ITickable {
 
 	val inventory = ItemStackHandler(1)
 
-	var cooldown: Int = COOLDOWN
+	var cooldown = COOLDOWN
 
 	override fun update() {
 		if (!world.isRemote) {
@@ -57,7 +57,6 @@ class TileEntityWoodenHopper: TileEntityHopperBase(), ITickable {
 						return true
 					}
 				}
-				return true
 			} else if (tile is IInventory) {
 				for (i in 0.until(tile.sizeInventory)) {
 					val remainder = tile.insert(inventory.extractItem(0, 1, true), i)
@@ -66,7 +65,6 @@ class TileEntityWoodenHopper: TileEntityHopperBase(), ITickable {
 						return true
 					}
 				}
-				return true
 			} else if (tile != null && tile.hasCapability(ITEM_HANDLER_CAPABILITY, facing.opposite)) {
 				val handler = tile.getCapability(ITEM_HANDLER_CAPABILITY, facing.opposite)!!
 				for (i in 0.until(handler.slots)) {
@@ -82,7 +80,8 @@ class TileEntityWoodenHopper: TileEntityHopperBase(), ITickable {
 	}
 
 	private fun pull(): Boolean {
-		val items = world.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB(pos.x.toDouble(), pos.y + 0.5, pos.z.toDouble(), pos.x + 1.0, pos.y + 1.5, pos.z + 1.0))
+		val yOffset = if (inverted) -1 else 0
+		val items = world.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB(pos.x.toDouble(), pos.y + 0.5 + yOffset, pos.z.toDouble(), pos.x + 1.0, pos.y + 1.5 + yOffset, pos.z + 1.0))
 		for (item in items) {
 			val result = inventory.insertItem(0, item.entityItem, true)
 			if (result.count != item.entityItem.count) {
@@ -96,10 +95,11 @@ class TileEntityWoodenHopper: TileEntityHopperBase(), ITickable {
 			}
 		}
 
-		val tile = world.getTileEntity(pos.up())
+		val tile = world.getTileEntity(if (inverted) pos.down() else pos.up())
+		val side = if (inverted) EnumFacing.UP else EnumFacing.DOWN
 
 		if (tile is ISidedInventory) {
-			val slots = tile.getSlotsForFace(EnumFacing.DOWN)
+			val slots = tile.getSlotsForFace(side)
 			for (i in slots) {
 				val current = tile[i]
 				if (!current.isEmpty) {
@@ -125,8 +125,8 @@ class TileEntityWoodenHopper: TileEntityHopperBase(), ITickable {
 					}
 				}
 			}
-		} else if (tile != null && tile.hasCapability(ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN)) {
-			val handler = tile.getCapability(ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN)!!
+		} else if (tile != null && tile.hasCapability(ITEM_HANDLER_CAPABILITY, side)) {
+			val handler = tile.getCapability(ITEM_HANDLER_CAPABILITY, side)!!
 			for (i in 0.until(handler.slots)) {
 				val remainder = inventory.insertItem(0, handler.extractItem(i, 1, true), false)
 				if (remainder.isEmpty) {
@@ -153,14 +153,14 @@ class TileEntityWoodenHopper: TileEntityHopperBase(), ITickable {
 
 	override fun hasCapability(capability: Capability<*>, facing: EnumFacing?): Boolean {
 		if (capability == ITEM_HANDLER_CAPABILITY) {
-			return facing == EnumFacing.UP || facing == getHopperFacing()
+			return facing == (if (inverted) EnumFacing.DOWN else EnumFacing.UP) || facing == getHopperFacing()
 		}
 		return super.hasCapability(capability, facing)
 	}
 
 	override fun <T: Any?> getCapability(capability: Capability<T>, facing: EnumFacing?): T? {
 		if (capability == ITEM_HANDLER_CAPABILITY) {
-			if (facing == EnumFacing.UP || facing == getHopperFacing()) {
+			if (facing == (if (inverted) EnumFacing.DOWN else EnumFacing.UP) || facing == getHopperFacing()) {
 				return inventory as T
 			}
 		}

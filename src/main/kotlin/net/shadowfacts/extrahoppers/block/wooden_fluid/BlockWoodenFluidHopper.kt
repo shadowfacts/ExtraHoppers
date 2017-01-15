@@ -9,7 +9,6 @@ import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import net.minecraftforge.fml.common.registry.GameRegistry
 import net.shadowfacts.extrahoppers.ExtraHoppers
 import net.shadowfacts.extrahoppers.block.fluid.BlockFluidHopper
 import net.shadowfacts.extrahoppers.block.fluid.TileEntityFluidHopper
@@ -18,7 +17,7 @@ import net.shadowfacts.extrahoppers.gui.GUIHandler
 /**
  * @author shadowfacts
  */
-class BlockWoodenFluidHopper: BlockFluidHopper(name = "wooden_fluid_hopper", material = Material.WOOD) {
+class BlockWoodenFluidHopper(inverted: Boolean): BlockFluidHopper(inverted, name = "wooden_fluid_hopper", material = Material.WOOD) {
 
 	init {
 		setHardness(1.5f)
@@ -34,10 +33,6 @@ class BlockWoodenFluidHopper: BlockFluidHopper(name = "wooden_fluid_hopper", mat
 		} else {
 			return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ)
 		}
-	}
-
-	override fun registerTileEntity() {
-		GameRegistry.registerTileEntity(TileEntityWoodenFluidHopper::class.java, registryName.toString())
 	}
 
 	override fun addInformation(stack: ItemStack, player: EntityPlayer, tooltip: MutableList<String>, advanced: Boolean) {
