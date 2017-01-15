@@ -20,7 +20,7 @@ import org.lwjgl.opengl.GL11
 object TESRFluidHopper: TileEntitySpecialRenderer<TileEntityFluidHopper>() {
 
 	override fun renderTileEntityAt(te: TileEntityFluidHopper, x: Double, y: Double, z: Double, partialTicks: Float, destroyStage: Int) {
-		if (te.tank.fluid != null) {
+		if (te.tank.fluid != null && !te.world.getBlockState(te.pos.up()).isSideSolid(te.world, te.pos.up(), EnumFacing.DOWN)) {
 			val fluid = te.tank.fluid
 
 			val tessellator = Tessellator.getInstance()
