@@ -10,4 +10,5 @@ import net.shadowfacts.extrahoppers.block.fluid.TileEntityFluidHopper
 class TileEntityWoodenFluidHopper: TileEntityFluidHopper() {
 
 	override val fluidValiator: (FluidStack) -> Boolean = { it.fluid.temperature <= EHConfig.wfhMaxTemperature }
+
 }

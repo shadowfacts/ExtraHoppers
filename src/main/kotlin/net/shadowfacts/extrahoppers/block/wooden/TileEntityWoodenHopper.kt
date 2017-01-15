@@ -29,7 +29,8 @@ class TileEntityWoodenHopper: TileEntityHopperBase(), ITickable {
 
 	override fun update() {
 		if (!world.isRemote) {
-//			TODO: redstone
+			if (isPowered()) return
+
 			cooldown--
 			if (cooldown <= 0) {
 				val pulled = pull()

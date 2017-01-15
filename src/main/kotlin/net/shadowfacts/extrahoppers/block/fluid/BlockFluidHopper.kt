@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World
 import net.minecraftforge.fluids.FluidUtil
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY
@@ -25,6 +26,21 @@ open class BlockFluidHopper(inverted: Boolean, name: String = "fluid_hopper", ma
 		setHardness(3.5f)
 		setResistance(8f)
 		soundType = SoundType.METAL
+	}
+
+	@Deprecated("")
+	override fun hasComparatorInputOverride(state: IBlockState): Boolean {
+		return true
+	}
+
+	@Deprecated("")
+	override fun getComparatorInputOverride(blockState: IBlockState, world: World, pos: BlockPos): Int {
+		val tank = getTileEntity(world, pos).tank
+		if (tank.fluidAmount == 0) {
+			return 0
+		} else {
+			return MathHelper.floor((tank.fluidAmount / tank.capacity) * 14.0) + 1
+		}
 	}
 
 	override fun onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, hand: EnumHand, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {

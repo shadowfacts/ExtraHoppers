@@ -11,6 +11,10 @@ abstract class TileEntityHopperBase(var inverted: Boolean): BaseTileEntity() {
 
 	constructor(): this(false)
 
+	fun isPowered(): Boolean {
+		return world.isBlockPowered(pos)
+	}
+
 	fun getHopperFacing(): EnumFacing {
 		return world.getBlockState(pos).getValue(BlockHopperBase.FACING)
 	}

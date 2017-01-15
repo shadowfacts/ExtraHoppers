@@ -57,7 +57,8 @@ open class TileEntityFluidHopper(inverted: Boolean): TileEntityHopperBase(invert
 
 	override fun update() {
 		if (!world.isRemote) {
-//			TODO: redstone me
+			if (isPowered()) return
+
 			handlerCooldown--
 			if (handlerCooldown <= 0) {
 				handleFluidHandlers()
