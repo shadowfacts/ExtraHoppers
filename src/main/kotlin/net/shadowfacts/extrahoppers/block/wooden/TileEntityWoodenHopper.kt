@@ -17,7 +17,7 @@ import net.shadowfacts.forgelin.extensions.get
 /**
  * @author shadowfacts
  */
-class TileEntityWoodenHopper: TileEntityHopperBase(), ITickable {
+class TileEntityWoodenHopper(inverted: Boolean): TileEntityHopperBase(inverted), ITickable {
 
 	companion object {
 		val COOLDOWN = 24
@@ -26,6 +26,8 @@ class TileEntityWoodenHopper: TileEntityHopperBase(), ITickable {
 	val inventory = ItemStackHandler(1)
 
 	var cooldown = COOLDOWN
+
+	constructor(): this(false)
 
 	override fun update() {
 		if (!world.isRemote) {

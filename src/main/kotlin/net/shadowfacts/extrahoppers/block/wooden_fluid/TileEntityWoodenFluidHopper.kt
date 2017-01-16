@@ -7,7 +7,9 @@ import net.shadowfacts.extrahoppers.block.fluid.TileEntityFluidHopper
 /**
  * @author shadowfacts
  */
-class TileEntityWoodenFluidHopper: TileEntityFluidHopper() {
+class TileEntityWoodenFluidHopper(inverted: Boolean): TileEntityFluidHopper(inverted) {
+
+	constructor(): this(false)
 
 	override val fluidValiator: (FluidStack) -> Boolean = { it.fluid.temperature <= EHConfig.wfhMaxTemperature }
 

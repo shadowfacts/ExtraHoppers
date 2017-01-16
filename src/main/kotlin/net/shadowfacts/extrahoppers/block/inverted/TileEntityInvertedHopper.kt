@@ -18,7 +18,7 @@ import net.shadowfacts.forgelin.extensions.isEmpty
 /**
  * @author shadowfacts
  */
-class TileEntityInvertedHopper: TileEntityHopperBase(), ITickable {
+class TileEntityInvertedHopper: TileEntityHopperBase(true), ITickable {
 
 	companion object {
 		val COOLDOWN = 8
