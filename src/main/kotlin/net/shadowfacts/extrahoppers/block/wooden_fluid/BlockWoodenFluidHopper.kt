@@ -39,7 +39,7 @@ class BlockWoodenFluidHopper(inverted: Boolean): BlockFluidHopper(inverted, name
 	}
 
 	override fun createTileEntity(world: World, state: IBlockState): TileEntityFluidHopper {
-		return TileEntityWoodenFluidHopper()
+		return TileEntityWoodenFluidHopper(inverted)
 	}
 
 }

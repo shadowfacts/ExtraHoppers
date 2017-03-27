@@ -29,7 +29,7 @@ class BlockWoodenHopper(inverted: Boolean): BlockHopperBase<TileEntityWoodenHopp
 	}
 
 	override fun createTileEntity(world: World, state: IBlockState): TileEntityWoodenHopper {
-		return TileEntityWoodenHopper()
+		return TileEntityWoodenHopper(inverted)
 	}
 
 }
