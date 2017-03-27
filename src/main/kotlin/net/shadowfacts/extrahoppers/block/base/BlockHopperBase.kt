@@ -40,7 +40,7 @@ abstract class BlockHopperBase<out TE: BaseTileEntity>(val inverted: Boolean, na
 	}
 
 	@Deprecated("")
-	override fun addCollisionBoxToList(state: IBlockState, world: World, pos: BlockPos, entityBox: AxisAlignedBB, collidingBoxes: List<AxisAlignedBB>, entity: Entity?) {
+	override fun addCollisionBoxToList(state: IBlockState, world: World, pos: BlockPos, entityBox: AxisAlignedBB, collidingBoxes: MutableList<AxisAlignedBB>, entity: Entity?, p_185477_7_: Boolean) {
 		addCollisionBoxToList(pos, entityBox, collidingBoxes, BASE_AABB)
 		addCollisionBoxToList(pos, entityBox, collidingBoxes, EAST_AABB)
 		addCollisionBoxToList(pos, entityBox, collidingBoxes, WEST_AABB)
