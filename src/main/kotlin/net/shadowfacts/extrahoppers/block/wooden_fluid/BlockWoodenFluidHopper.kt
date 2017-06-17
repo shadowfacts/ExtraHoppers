@@ -3,6 +3,7 @@ package net.shadowfacts.extrahoppers.block.wooden_fluid
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
+import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
@@ -35,7 +36,7 @@ class BlockWoodenFluidHopper(inverted: Boolean): BlockFluidHopper(inverted, name
 		}
 	}
 
-	override fun addInformation(stack: ItemStack, player: EntityPlayer, tooltip: MutableList<String>, advanced: Boolean) {
+	override fun addInformation(stack: ItemStack, world: World?, tooltip: MutableList<String>, flag: ITooltipFlag) {
 	}
 
 	override fun createTileEntity(world: World, state: IBlockState): TileEntityFluidHopper {

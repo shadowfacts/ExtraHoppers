@@ -7,7 +7,7 @@ buildscript {
 		}
 	}
 	dependencies {
-		classpath "net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT"
+		classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}"
 	}
 }
@@ -51,6 +51,7 @@ processResources {
 }
 
 repositories {
+	jcenter()
 	maven {
 		name "shadowfacts"
 		url "http://mvn.rx14.co.uk/shadowfacts/"
@@ -72,7 +73,7 @@ curseforge {
 	project {
 		id = "246215"
 
-		addGameVersion "1.11"
+		addGameVersion "1.12"
 		addGameVersion "Java 8"
 
 		mainArtifact(jar) {

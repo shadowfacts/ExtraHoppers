@@ -1,0 +1,20 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"I I",
+		"I I",
+		" B "
+	],
+	"key": {
+		"I": {
+			"type": "forge:ore_dict",
+			"ore": "ingotIron"
+		},
+		"B": {
+			"item": "minecraft:bucket"
+		}
+	},
+	"result": {
+		"item": "extrahoppers:fluid_hopper"
+	}
+}

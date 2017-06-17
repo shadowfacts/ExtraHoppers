@@ -91,13 +91,13 @@ class TileEntityInvertedHopper: TileEntityHopperBase(true), ITickable {
 		val items = world.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB(pos.x.toDouble(), pos.y - 0.5, pos.z.toDouble(), pos.x + 1.0, pos.y + 0.5, pos.z + 1.0))
 		for (item in items) {
 			for (slot in 0.until(inventory.slots)) {
-				val result = inventory.insertItem(slot, item.entityItem, true)
-				if (result.count != item.entityItem.count) {
-					inventory.insertItem(slot, item.entityItem, false)
+				val result = inventory.insertItem(slot, item.item, true)
+				if (result.count != item.item.count) {
+					inventory.insertItem(slot, item.item, false)
 					if (result.isEmpty) {
 						item.setDead()
 					} else {
-						item.setEntityItemStack(result)
+						item.item = result
 					}
 					return true
 				}

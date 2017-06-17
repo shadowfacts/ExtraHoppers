@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL11
  */
 object TESRFluidHopper: TileEntitySpecialRenderer<TileEntityFluidHopper>() {
 
-	override fun renderTileEntityAt(te: TileEntityFluidHopper, x: Double, y: Double, z: Double, partialTicks: Float, destroyStage: Int) {
+	override fun renderTileEntityAt(te: TileEntityFluidHopper, x: Double, y: Double, z: Double, partialTicks: Float, destroyStage: Int, alpha: Float) {
 		val pos = if (te.inverted) te.pos.down() else te.pos.up()
 
 		if (te.tank.fluid != null && !te.world.getBlockState(pos).isSideSolid(te.world, pos, EnumFacing.DOWN)) {

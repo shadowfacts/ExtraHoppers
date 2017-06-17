@@ -4,6 +4,7 @@ import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.client.resources.I18n
+import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
@@ -47,18 +48,15 @@ open class BlockFluidHopper(inverted: Boolean, name: String = "fluid_hopper", ma
 		if (player.isSneaking) {
 			player.openGui(ExtraHoppers, GUIHandler.FLUID_HOPPER, world, pos.x, pos.y, pos.z)
 		} else {
-			val te = getTileEntity(world, pos)
-			val stack = player.getHeldItem(hand)
-			val result = FluidUtil.interactWithFluidHandler(stack, te.getCapability(FLUID_HANDLER_CAPABILITY, EnumFacing.NORTH), player)
-			if (result.isSuccess) {
-				player.setHeldItem(hand, result.getResult())
-				te.save()
+			val res = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side)
+			if (res) {
+				getTileEntity(world, pos).save()
 			}
 		}
 		return true
 	}
 
-	override fun addInformation(stack: ItemStack, player: EntityPlayer, tooltip: MutableList<String>, advanced: Boolean) {
+	override fun addInformation(stack: ItemStack, world: World?, tooltip: MutableList<String>, flag: ITooltipFlag) {
 		tooltip.add(I18n.format("tile.extrahoppers:fluid_hopper.tooltip"))
 	}
 

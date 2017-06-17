@@ -123,7 +123,7 @@ open class TileEntityFluidHopper(inverted: Boolean): TileEntityHopperBase(invert
 			val pickupPos = if (inverted) pos.down() else pos.up()
 			if (FluidUtils.isFluidBlock(world, pickupPos)) {
 				val toDrain = FluidUtils.drainFluidBlock(world, pickupPos, false)!!
-				if (toDrain.amount <= tank.capacity - tank.fluidAmount && tank.fill(toDrain, false) === 1000) {
+				if (toDrain.amount <= tank.capacity - tank.fluidAmount && tank.fill(toDrain, false) == 1000) {
 					tank.fill(FluidUtils.drainFluidBlock(world, pickupPos, true), true)
 					return true
 				}

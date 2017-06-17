@@ -1,0 +1,17 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"W W",
+		"W W",
+		" W "
+	],
+	"key": {
+		"W": {
+			"type": "forge:ore_dict",
+			"ore": "plankWood"
+		}
+	},
+	"result": {
+		"item": "extrahoppers:wooden_hopper"
+	}
+}

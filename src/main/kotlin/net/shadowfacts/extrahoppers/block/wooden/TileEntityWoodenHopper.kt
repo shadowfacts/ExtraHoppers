@@ -86,13 +86,13 @@ class TileEntityWoodenHopper(inverted: Boolean): TileEntityHopperBase(inverted),
 		val yOffset = if (inverted) -1 else 0
 		val items = world.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB(pos.x.toDouble(), pos.y + 0.5 + yOffset, pos.z.toDouble(), pos.x + 1.0, pos.y + 1.5 + yOffset, pos.z + 1.0))
 		for (item in items) {
-			val result = inventory.insertItem(0, item.entityItem, true)
-			if (result.count != item.entityItem.count) {
-				inventory.insertItem(0, item.entityItem, false)
+			val result = inventory.insertItem(0, item.item, true)
+			if (result.count != item.item.count) {
+				inventory.insertItem(0, item.item, false)
 				if (result.isEmpty) {
 					item.setDead()
 				} else {
-					item.setEntityItemStack(result)
+					item.item = result
 				}
 				return true
 			}

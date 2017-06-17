@@ -1,0 +1,11 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"item": "extrahoppers:inverted_fluid_hopper"
+		}
+	],
+	"result": {
+		"item": "extrahoppers:fluid_hopper"
+	}
+}

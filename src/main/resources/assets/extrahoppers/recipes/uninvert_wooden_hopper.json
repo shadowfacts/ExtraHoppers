@@ -1,0 +1,11 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"item": "extrahoppers:inverted_wooden_hopper"
+		}
+	],
+	"result": {
+		"item": "extrahoppers:wooden_hopper"
+	}
+}

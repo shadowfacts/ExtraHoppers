@@ -33,8 +33,6 @@ object ExtraHoppers {
 
 		blocks.init()
 
-		ModRecipes.init()
-
 		NetworkRegistry.INSTANCE.registerGuiHandler(ExtraHoppers, GUIHandler)
 	}
 
