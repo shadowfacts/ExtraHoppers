@@ -2,6 +2,7 @@ package net.shadowfacts.extrahoppers
 
 import net.minecraft.block.Block
 import net.minecraft.item.Item
+import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.fml.client.registry.ClientRegistry
@@ -91,6 +92,22 @@ object ExtraHoppers {
 					blocks.advancedHopper.createItemBlock(),
 					blocks.invertedAdvancedHopper.createItemBlock()
 			)
+		}
+
+		@JvmStatic
+		@SubscribeEvent
+		fun registerModels(event: ModelRegistryEvent) {
+			blocks.invertedHopper.initItemModel()
+			blocks.fluidHopper.initItemModel()
+			blocks.invertedFluidHopper.initItemModel()
+			blocks.advancedFluidHopper.initItemModel()
+			blocks.invertedAdvancedFluidHopper.initItemModel()
+			blocks.woodenHopper.initItemModel()
+			blocks.invertedWoodenHopper.initItemModel()
+			blocks.woodenFluidHopper.initItemModel()
+			blocks.invertedWoodenFluidHopper.initItemModel()
+			blocks.advancedHopper.initItemModel()
+			blocks.invertedAdvancedHopper.initItemModel()
 		}
 
 	}
