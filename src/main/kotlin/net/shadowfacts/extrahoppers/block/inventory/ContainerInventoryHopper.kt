@@ -20,11 +20,13 @@ class ContainerInventoryHopper(val hopper: TileEntityInventoryHopper, playerInv:
 			addSlotToContainer(SlotHopper(hopper, i, 44 + i * 18, 21))
 		}
 
-		for (i in 0..2) {
-			addSlotToContainer(SlotItemFilter(hopper, i, -62 + i * 18, 12))
-		}
-		for (i in 0..2) {
-			addSlotToContainer(SlotItemFilter(hopper, i + 3, -62 + i * 18, 33))
+		if (hopper.advanced) {
+			for (i in 0..2) {
+				addSlotToContainer(SlotItemFilter(hopper, i, -62 + i * 18, 12))
+			}
+			for (i in 0..2) {
+				addSlotToContainer(SlotItemFilter(hopper, i + 3, -62 + i * 18, 33))
+			}
 		}
 
 		for (l in 0..2) {
