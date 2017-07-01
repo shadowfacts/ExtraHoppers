@@ -6,6 +6,10 @@ tile.extrahoppers:wooden_hopper.name=Wooden Hopper
 tile.extrahoppers:inverted_wooden_hopper.name=Inverted Wooden Hopper
 tile.extrahoppers:wooden_fluid_hopper.name=Wooden Fluid Hopper
 tile.extrahoppers:inverted_wooden_fluid_hopper.name=Inverted Wooden Fluid Hopper
+tile.extrahoppers:advanced_fluid_hopper.name=Advanced Fluid Hopper
+tile.extrahoppers:inverted_advanced_fluid_hopper.name=Inverted Advanced Fluid Hopper
+tile.extrahoppers:advanced_hopper.name=Advanced Hopper
+tile.extrahoppers:inverted_advanced_hopper.name=Inverted Advanced Hopper
 
 extrahoppers.wooden_fluid_hopper.temperature=Temperature: %s%dK
 
@@ -13,3 +17,6 @@ extrahoppers.config.gui.title=Extra Hoppers Config
 extrahoppers.config.gui.category.fluidhopper=Fluid Hopper
 
 itemGroup.extrahoppers=Extra Hoppers
+
+extrahoppers.filtermode.whitelist=Whitelist
+extrahoppers.filtermode.blacklist=Blacklist

@@ -15,11 +15,6 @@ class EHGUIFactory: IModGuiFactory {
 
 	override fun createConfigGui(parentScreen: GuiScreen) = EHConfigGUI(parentScreen)
 
-	@Deprecated("")
-	override fun mainConfigGuiClass() = EHConfigGUI::class.java
-
 	override fun runtimeGuiCategories() = null
-
-	override fun getHandlerFor(element: IModGuiFactory.RuntimeOptionCategoryElement) = null
 
 }

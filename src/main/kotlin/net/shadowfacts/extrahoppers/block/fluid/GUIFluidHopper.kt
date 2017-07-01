@@ -4,6 +4,7 @@ import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.inventory.Container
 import net.minecraft.util.ResourceLocation
 import net.shadowfacts.extrahoppers.MOD_ID
+import net.shadowfacts.extrahoppers.gui.element.UIFilterButton
 import net.shadowfacts.extrahoppers.gui.element.UIFluidIndicator
 import net.shadowfacts.shadowmc.ui.dsl.container
 
@@ -34,6 +35,21 @@ object GUIFluidHopper {
 					height = 166 / 2
 
 					add(UIFluidIndicator(hopper.tank, "fluidIndicator"))
+
+					if (hopper.advanced) {
+						buttonRedstoneMode {
+							id = "mode"
+							mode = hopper.mode
+							callback = {
+								hopper.mode = it
+								hopper.sync()
+							}
+						}
+
+						add(UIFilterButton({
+							// TODO
+						}, "filter"))
+					}
 				}
 			}
 

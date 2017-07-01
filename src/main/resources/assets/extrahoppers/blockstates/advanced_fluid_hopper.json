@@ -1,0 +1,40 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"textures": {
+			"particle": "blocks/gold_block",
+			"top": "blocks/gold_block",
+			"side": "blocks/gold_block",
+			"inside": "blocks/gold_block"
+		}
+	},
+	"variants": {
+		"inventory": {
+			"model": "hopper_down",
+			"transform": "forge:default-block"
+		},
+		"facing": {
+			"up": {
+				"model": "hopper_down"
+			},
+			"down": {
+				"model": "hopper_down"
+			},
+			"north": {
+				"model": "hopper_side"
+			},
+			"south": {
+				"model": "hopper_side",
+				"y": 180
+			},
+			"west": {
+				"model": "hopper_side",
+				"y": 270
+			},
+			"east": {
+				"model": "hopper_side",
+				"y": 90
+			}
+		}
+	}
+}

@@ -15,7 +15,7 @@ import net.shadowfacts.extrahoppers.gui.GUIHandler
 /**
  * @author shadowfacts
  */
-class BlockWoodenHopper(inverted: Boolean): BlockHopperBase<TileEntityWoodenHopper>(inverted, "wooden_hopper", Material.WOOD) {
+class BlockWoodenHopper(inverted: Boolean): BlockHopperBase<TileEntityWoodenHopper>(inverted, false, "wooden_hopper", Material.WOOD) {
 
 	init {
 		setHardness(1.5f)

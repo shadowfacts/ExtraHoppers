@@ -21,7 +21,7 @@ import net.shadowfacts.extrahoppers.gui.GUIHandler
 /**
  * @author shadowfacts
  */
-open class BlockFluidHopper(inverted: Boolean, name: String = "fluid_hopper", material: Material = Material.IRON): BlockHopperBase<TileEntityFluidHopper>(inverted, name, material = material) {
+open class BlockFluidHopper(inverted: Boolean, advanced: Boolean, name: String = "fluid_hopper", material: Material = Material.IRON): BlockHopperBase<TileEntityFluidHopper>(inverted, advanced, name, material = material) {
 
 	init {
 		setHardness(3.5f)
@@ -35,7 +35,7 @@ open class BlockFluidHopper(inverted: Boolean, name: String = "fluid_hopper", ma
 	}
 
 	@Deprecated("")
-	override fun getComparatorInputOverride(blockState: IBlockState, world: World, pos: BlockPos): Int {
+	override fun getComparatorInputOverride(state: IBlockState, world: World, pos: BlockPos): Int {
 		val tank = getTileEntity(world, pos).tank
 		if (tank.fluidAmount == 0) {
 			return 0
@@ -57,11 +57,13 @@ open class BlockFluidHopper(inverted: Boolean, name: String = "fluid_hopper", ma
 	}
 
 	override fun addInformation(stack: ItemStack, world: World?, tooltip: MutableList<String>, flag: ITooltipFlag) {
-		tooltip.add(I18n.format("tile.extrahoppers:fluid_hopper.tooltip"))
+		if (!advanced) {
+			tooltip.add(I18n.format("tile.extrahoppers:fluid_hopper.tooltip"))
+		}
 	}
 
 	override fun createTileEntity(world: World, state: IBlockState): TileEntityFluidHopper {
-		return TileEntityFluidHopper(inverted)
+		return TileEntityFluidHopper(inverted, advanced)
 	}
 
 }

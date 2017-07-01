@@ -1,3 +1,13 @@
 #top {
 	vertical-layout: top
 }
+
+#mode {
+	horizontal-layout: left
+	margin-left: 20
+}
+
+#filter {
+	horizontal-layout: right
+	margin-right: 20
+}

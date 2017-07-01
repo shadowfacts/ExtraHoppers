@@ -18,7 +18,7 @@ import net.shadowfacts.shadowmc.tileentity.BaseTileEntity
 /**
  * @author shadowfacts
  */
-abstract class BlockHopperBase<out TE: BaseTileEntity>(val inverted: Boolean, name: String, material: Material = Material.ROCK): BlockTE<TE>(if (inverted) "inverted_$name" else name, material = material) {
+abstract class BlockHopperBase<out TE: BaseTileEntity>(val inverted: Boolean, val advanced: Boolean, name: String, material: Material = Material.ROCK): BlockTE<TE>(getName(inverted, advanced, name), material = material) {
 
 	companion object {
 		val FACING: PropertyDirection = PropertyDirection.create("facing")
@@ -28,6 +28,13 @@ abstract class BlockHopperBase<out TE: BaseTileEntity>(val inverted: Boolean, na
 		val NORTH_AABB = AxisAlignedBB(0.0, 0.0, 0.875, 1.0, 1.0, 1.0)
 		val WEST_AABB = AxisAlignedBB(0.875, 0.0, 0.0, 1.0, 1.0, 1.0)
 		val EAST_AABB = AxisAlignedBB(0.0, 0.0, 0.0, 0.125, 1.0, 1.0)
+
+		private fun getName(inverted: Boolean, advanced: Boolean, name: String): String {
+			var name = name
+			if (advanced) name = "advanced_$name"
+			if (inverted) name = "inverted_$name"
+			return name
+		}
 	}
 
 	init {

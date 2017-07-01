@@ -18,7 +18,7 @@ import net.shadowfacts.extrahoppers.gui.GUIHandler
 /**
  * @author shadowfacts
  */
-class BlockWoodenFluidHopper(inverted: Boolean): BlockFluidHopper(inverted, name = "wooden_fluid_hopper", material = Material.WOOD) {
+class BlockWoodenFluidHopper(inverted: Boolean): BlockFluidHopper(inverted, false, name = "wooden_fluid_hopper", material = Material.WOOD) {
 
 	init {
 		setHardness(1.5f)

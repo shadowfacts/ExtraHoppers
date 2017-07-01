@@ -13,6 +13,8 @@ import net.minecraftforge.fml.common.network.NetworkRegistry
 import net.shadowfacts.extrahoppers.EHConfig
 import net.shadowfacts.extrahoppers.block.base.TileEntityHopperBase
 import net.shadowfacts.extrahoppers.util.FluidUtils
+import net.shadowfacts.extrahoppers.util.filter.Filter
+import net.shadowfacts.extrahoppers.util.filter.FluidFilter
 import net.shadowfacts.shadowmc.ShadowMC
 import net.shadowfacts.shadowmc.network.PacketRequestTEUpdate
 import net.shadowfacts.shadowmc.network.PacketUpdateTE
@@ -20,14 +22,16 @@ import net.shadowfacts.shadowmc.network.PacketUpdateTE
 /**
  * @author shadowfacts
  */
-open class TileEntityFluidHopper(inverted: Boolean): TileEntityHopperBase(inverted), ITickable {
-
-	constructor(): this(false)
+open class TileEntityFluidHopper(inverted: Boolean, advanced: Boolean): TileEntityHopperBase<FluidStack>(inverted, advanced), ITickable {
 
 	companion object {
 		val HANDLER_COOLDOWN = 8
 		val WORLD_COOLDOWN = 40
 	}
+
+	override var filter: Filter<FluidStack> = FluidFilter(6)
+
+	constructor(): this(false, false)
 
 	internal var tank = object: FluidTank(EHConfig.fhSize) {
 		override fun onContentsChanged() {
@@ -35,6 +39,7 @@ open class TileEntityFluidHopper(inverted: Boolean): TileEntityHopperBase(invert
 		}
 
 		override fun canFillFluidType(fluid: FluidStack?): Boolean {
+//			return fluid == null || (fluidValiator(fluid) && filterAccepts(fluid))
 			return fluid == null || fluidValiator(fluid)
 		}
 	}
@@ -57,14 +62,14 @@ open class TileEntityFluidHopper(inverted: Boolean): TileEntityHopperBase(invert
 
 	override fun update() {
 		if (!world.isRemote) {
-			if (isPowered()) return
-
 			handlerCooldown--
+			worldCooldown--
+
+			if (!checkRedstone()) return
+
 			if (handlerCooldown <= 0) {
 				handleFluidHandlers()
 			}
-
-			worldCooldown--
 			if (worldCooldown <= 0) {
 				handleWorld()
 			}

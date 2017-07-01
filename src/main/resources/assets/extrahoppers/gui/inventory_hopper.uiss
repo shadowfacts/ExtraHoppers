@@ -1,0 +1,59 @@
+#top {
+	vertical-layout: top
+}
+
+#filter {
+	horizontal-layout: left
+	margin-left: 12
+	vertical-layout: top
+	margin-top: 18
+}
+
+#mode {
+	horizontal-layout: right
+	margin-right: 12
+	vertical-layout: top
+	margin-top: 18
+}
+
+#filter-container {
+	horizontal-layout: left
+	vertical-layout: top
+	margin-left: 4
+}
+
+#filter-bottom {
+	vertical-layout: bottom
+	margin-bottom: 3
+}
+
+#filter-slots {
+	vertical-layout: top
+	margin-top: 11
+	horizontal-layout: left
+	margin-left: 17
+}
+
+.filter-slot-top {
+	vertical-layout: top
+}
+
+#filter-slot-0 {
+	horizontal-layout: left
+}
+
+#filter-slot-2 {
+	horizontal-layout: right
+}
+
+.filter-slot-bottom {
+	vertical-layout: bottom
+}
+
+#filter-slot-3 {
+	horizontal-layout: left
+}
+
+#filter-slot-4 {
+	horizontal-layout: right
+}
