@@ -3,7 +3,6 @@ package net.shadowfacts.extrahoppers
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraftforge.client.event.ModelRegistryEvent
-import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.fml.client.registry.ClientRegistry
 import net.minecraftforge.fml.common.Mod
@@ -20,7 +19,6 @@ import net.shadowfacts.extrahoppers.block.fluid.TileEntityFluidHopper
 import net.shadowfacts.extrahoppers.block.inverted.TileEntityInvertedHopper
 import net.shadowfacts.extrahoppers.block.wooden.TileEntityWoodenHopper
 import net.shadowfacts.extrahoppers.block.wooden_fluid.TileEntityWoodenFluidHopper
-import net.shadowfacts.extrahoppers.event.ClientEventHandler
 import net.shadowfacts.extrahoppers.gui.GUIHandler
 
 /**
@@ -45,8 +43,6 @@ object ExtraHoppers {
 	fun preInitClient(event: FMLPreInitializationEvent) {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluidHopper::class.java, TESRFluidHopper)
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWoodenFluidHopper::class.java, TESRFluidHopper)
-
-		MinecraftForge.EVENT_BUS.register(ClientEventHandler)
 	}
 
 	@Mod.EventBusSubscriber

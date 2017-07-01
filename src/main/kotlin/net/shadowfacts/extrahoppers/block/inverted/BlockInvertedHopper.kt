@@ -25,9 +25,7 @@ class BlockInvertedHopper: BlockHopperBase<TileEntityInvertedHopper>(true, false
 	}
 
 	@Deprecated("")
-	override fun hasComparatorInputOverride(state: IBlockState): Boolean {
-		return true
-	}
+	override fun hasComparatorInputOverride(state: IBlockState) = true
 
 	@Deprecated("")
 	override fun getComparatorInputOverride(state: IBlockState, world: World, pos: BlockPos): Int {

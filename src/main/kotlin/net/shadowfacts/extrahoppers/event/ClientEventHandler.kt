@@ -4,15 +4,19 @@ import net.minecraft.client.resources.I18n
 import net.minecraft.util.text.TextFormatting
 import net.minecraftforge.event.entity.player.ItemTooltipEvent
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY
+import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.shadowfacts.extrahoppers.EHConfig
+import net.shadowfacts.extrahoppers.MOD_ID
 import net.shadowfacts.extrahoppers.gui.GUIHandler
 
 /**
  * @author shadowfacts
  */
+@Mod.EventBusSubscriber(modid = MOD_ID)
 object ClientEventHandler {
 
+	@JvmStatic
 	@SubscribeEvent
 	fun itemTooltip(event: ItemTooltipEvent) {
 		if (GUIHandler.woodenFluidHopperOpen) {

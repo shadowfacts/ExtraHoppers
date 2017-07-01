@@ -12,13 +12,9 @@ import net.shadowfacts.shadowmc.util.MouseButton
 //TODO: move me to ShadowMC
 class UIFilterButton(val callback: (UIFilterButton) -> Unit, id: String, vararg classes: String): UIButtonBase("", id, *classes) {
 
-	override fun getMinDimensions(): UIDimensions {
-		return preferredDimensions
-	}
+	override fun getMinDimensions() = preferredDimensions
 
-	override fun getPreferredDimensions(): UIDimensions {
-		return UIDimensions(20, 20)
-	}
+	override fun getPreferredDimensions() = UIDimensions(20, 20)
 
 	override fun handlePress(mouseX: Int, mouseY: Int, button: MouseButton?): Boolean {
 		callback(this)

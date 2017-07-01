@@ -79,9 +79,10 @@ abstract class BlockHopperBase<out TE: BaseTileEntity>(val inverted: Boolean, va
 	}
 
 	@Deprecated("")
-	override fun isOpaqueCube(state: IBlockState?): Boolean {
-		return false
-	}
+	override fun isOpaqueCube(state: IBlockState) = false
+
+	@Deprecated("")
+	override fun isFullCube(state: IBlockState?) = false
 
 
 }

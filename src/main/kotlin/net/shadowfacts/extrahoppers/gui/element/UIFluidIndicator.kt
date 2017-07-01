@@ -9,8 +9,6 @@ import net.shadowfacts.shadowmc.ui.element.UIFluidIndicator
  */
 class UIFluidIndicator(tank: IFluidTank, id: String, vararg classes: String): UIFluidIndicator(tank, id, *classes) {
 
-	override fun getPreferredDimensions(): UIDimensions {
-		return UIDimensions(20, 73)
-	}
+	override fun getPreferredDimensions() = UIDimensions(20, 73)
 
 }

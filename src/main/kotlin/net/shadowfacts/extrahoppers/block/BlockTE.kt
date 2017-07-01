@@ -21,9 +21,7 @@ abstract class BlockTE<out TE: BaseTileEntity>(name: String, material: Material 
 
 	abstract override fun createTileEntity(world: World, state: IBlockState): TE
 
-	override fun hasTileEntity(state: IBlockState): Boolean {
-		return true
-	}
+	override fun hasTileEntity(state: IBlockState) = true
 
 	fun getTileEntity(world: IBlockAccess, pos: BlockPos): TE {
 		return world.getTileEntity(pos) as TE

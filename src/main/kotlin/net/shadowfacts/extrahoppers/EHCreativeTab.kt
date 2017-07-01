@@ -8,8 +8,6 @@ import net.minecraft.item.ItemStack
  */
 object EHCreativeTab: CreativeTabs(MOD_ID) {
 
-	override fun getTabIconItem(): ItemStack {
-		return ItemStack(ExtraHoppers.blocks.woodenHopper)
-	}
+	override fun getTabIconItem() = ItemStack(ExtraHoppers.blocks.woodenHopper)
 
 }
