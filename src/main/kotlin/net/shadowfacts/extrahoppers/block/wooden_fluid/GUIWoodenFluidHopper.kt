@@ -14,7 +14,7 @@ import net.shadowfacts.shadowmc.ui.dsl.container
  */
 object GUIWoodenFluidHopper {
 
-	private val BG = ResourceLocation("shadowmc", "textures/gui/blank.png")
+	private val BG = ResourceLocation(MOD_ID, "textures/gui/fluid_hopper.png")
 
 	fun create(hopper: TileEntityFluidHopper, container: Container): GuiContainer {
 		return container(container) {

@@ -52,7 +52,7 @@ class ContainerInventoryHopper(val hopper: TileEntityInventoryHopper, playerInv:
 	}
 
 	override fun transferStackInSlot(player: EntityPlayer, index: Int): ItemStack {
-		if (index in hopper.inventory.slots..hopper.inventory.slots + 5) {
+		if (index in hopper.inventory.slots..hopper.inventory.slots + 5) { // if the slot is a filter slot
 			return ItemStack.EMPTY
 		}
 		return super.transferStackInSlot(player, index)

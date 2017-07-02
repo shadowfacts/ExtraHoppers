@@ -1,6 +1,7 @@
 package net.shadowfacts.extrahoppers.block.fluid
 
 import net.minecraft.block.BlockLiquid
+import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.ITickable
@@ -8,13 +9,21 @@ import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.fluids.Fluid.BUCKET_VOLUME
 import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fluids.FluidTank
+import net.minecraftforge.fluids.FluidUtil
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY
+import net.minecraftforge.fluids.capability.IFluidHandlerItem
 import net.minecraftforge.fml.common.network.NetworkRegistry
+import net.minecraftforge.items.ItemStackHandler
 import net.shadowfacts.extrahoppers.EHConfig
 import net.shadowfacts.extrahoppers.block.base.TileEntityHopperBase
 import net.shadowfacts.extrahoppers.util.FluidUtils
 import net.shadowfacts.extrahoppers.util.filter.Filter
 import net.shadowfacts.extrahoppers.util.filter.FluidFilter
+import net.shadowfacts.extrahoppers.util.getFluidHandler
+import net.shadowfacts.extrahoppers.util.hasFluidHandler
+import net.shadowfacts.forgelin.extensions.get
+import net.shadowfacts.forgelin.extensions.set
 import net.shadowfacts.shadowmc.ShadowMC
 import net.shadowfacts.shadowmc.network.PacketRequestTEUpdate
 import net.shadowfacts.shadowmc.network.PacketUpdateTE
@@ -43,6 +52,21 @@ open class TileEntityFluidHopper(inverted: Boolean, advanced: Boolean): TileEnti
 			return fluid == null || fluidValiator(fluid)
 		}
 	}
+	val ioInventory = object: ItemStackHandler(2) {
+		override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
+			if (!stack.hasFluidHandler()) return stack
+//			val stackHandler = stack.getFluidHandler()
+//			when (slot) {
+//				0 -> { // insert fluid
+//					if (stackHandler.drain(tank.fill(stackHandler.drain(tank.capacity - tank.fluidAmount, false), false), false) == null) return stack
+//				}
+//				1 -> { // extract fluid
+//					if (tank.drain(stackHandler.fill(tank.drain(tank.fluidAmount, false), false), false) == null) return stack
+//				}
+//			}
+			return super.insertItem(slot, stack, simulate)
+		}
+	}
 
 	protected open val fluidValiator: (FluidStack) -> Boolean = { true }
 
@@ -67,11 +91,36 @@ open class TileEntityFluidHopper(inverted: Boolean, advanced: Boolean): TileEnti
 
 			if (!checkRedstone()) return
 
+			extractFromItem()
+			insertIntoItem()
+
 			if (handlerCooldown <= 0) {
 				handleFluidHandlers()
 			}
 			if (worldCooldown <= 0) {
 				handleWorld()
+			}
+		}
+	}
+
+	private fun extractFromItem() {
+		val stack = ioInventory[0]
+		if (!stack.isEmpty) {
+			val res = FluidUtil.tryEmptyContainer(stack, tank, tank.capacity - tank.fluidAmount, null, true)
+			if (res.isSuccess) {
+				ioInventory[0] = res.result
+				save()
+			}
+		}
+	}
+
+	private fun insertIntoItem() {
+		val stack = ioInventory[1]
+		if (!stack.isEmpty) {
+			val res = FluidUtil.tryFillContainer(stack, tank, tank.fluidAmount, null, true)
+			if (res.isSuccess) {
+				ioInventory[1] = res.result
+				save()
 			}
 		}
 	}
@@ -156,14 +205,16 @@ open class TileEntityFluidHopper(inverted: Boolean, advanced: Boolean): TileEnti
 	}
 
 	override fun writeToNBT(tag: NBTTagCompound): NBTTagCompound {
-		tank.writeToNBT(tag)
+		tag.setTag("tank", tank.writeToNBT(NBTTagCompound()))
+		tag.setTag("ioInventory", ioInventory.serializeNBT())
 		tag.setInteger("handlerCooldown", handlerCooldown)
 		tag.setInteger("worldCooldown", worldCooldown)
 		return super.writeToNBT(tag)
 	}
 
 	override fun readFromNBT(tag: NBTTagCompound) {
-		tank.readFromNBT(tag)
+		tank.readFromNBT(tag.getCompoundTag("tank"))
+		ioInventory.deserializeNBT(tag.getCompoundTag("ioInventory"))
 		handlerCooldown = tag.getInteger("handlerCooldown")
 		worldCooldown = tag.getInteger("worldCooldown")
 		super.readFromNBT(tag)

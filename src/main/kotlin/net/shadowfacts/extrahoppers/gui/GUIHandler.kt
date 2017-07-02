@@ -5,6 +5,7 @@ import net.minecraft.inventory.Container
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.fml.common.network.IGuiHandler
+import net.shadowfacts.extrahoppers.block.fluid.ContainerFluidHopper
 import net.shadowfacts.extrahoppers.block.inventory.ContainerInventoryHopper
 import net.shadowfacts.extrahoppers.block.fluid.GUIFluidHopper
 import net.shadowfacts.extrahoppers.block.fluid.TileEntityFluidHopper
@@ -32,21 +33,23 @@ object GUIHandler: IGuiHandler {
 
 	override fun getClientGuiElement(ID: Int, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Any? {
 		val pos = BlockPos(x, y, z)
+		val tile = world.getTileEntity(pos)
 		return when (ID) {
-			INVERTED_HOPPER, ADVANCED_HOPPER -> GUIInventoryHopper(getServerGuiElement(ID, player, world, x, y, z)!!, world.getTileEntity(pos) as TileEntityInventoryHopper)
-			FLUID_HOPPER -> GUIFluidHopper.create(world.getTileEntity(pos) as TileEntityFluidHopper, getServerGuiElement(ID, player, world, x, y, z)!!)
+			INVERTED_HOPPER, ADVANCED_HOPPER -> GUIInventoryHopper(getServerGuiElement(ID, player, world, x, y, z)!!, tile as TileEntityInventoryHopper)
+			FLUID_HOPPER -> GUIFluidHopper.create(tile as TileEntityFluidHopper, getServerGuiElement(ID, player, world, x, y, z)!!)
+			WOODEN_FLUID_HOPPER -> GUIWoodenFluidHopper.create(tile as TileEntityFluidHopper, getServerGuiElement(ID, player, world, x, y, z)!!)
 			WOODEN_HOPPER -> GUIWoodenHopper(getServerGuiElement(ID, player, world, x, y, z)!!)
-			WOODEN_FLUID_HOPPER -> GUIWoodenFluidHopper.create(world.getTileEntity(pos) as TileEntityFluidHopper, getServerGuiElement(ID, player, world, x, y, z)!!)
 			else -> null
 		}
 	}
 
 	override fun getServerGuiElement(ID: Int, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Container? {
 		val pos = BlockPos(x, y, z)
+		val tile = world.getTileEntity(pos)
 		return when (ID) {
-			INVERTED_HOPPER, ADVANCED_HOPPER -> ContainerInventoryHopper(world.getTileEntity(pos) as TileEntityInventoryHopper, player.inventory, pos)
-			FLUID_HOPPER, WOODEN_FLUID_HOPPER -> ContainerPlayerInv(pos, player.inventory)
-			WOODEN_HOPPER -> ContainerWoodenHopper(world.getTileEntity(pos) as TileEntityWoodenHopper, player.inventory, pos)
+			INVERTED_HOPPER, ADVANCED_HOPPER -> ContainerInventoryHopper(tile as TileEntityInventoryHopper, player.inventory, pos)
+			FLUID_HOPPER, WOODEN_FLUID_HOPPER -> ContainerFluidHopper(tile as TileEntityFluidHopper, player.inventory, pos)
+			WOODEN_HOPPER -> ContainerWoodenHopper(tile as TileEntityWoodenHopper, player.inventory, pos)
 			else -> null
 		}
 	}
