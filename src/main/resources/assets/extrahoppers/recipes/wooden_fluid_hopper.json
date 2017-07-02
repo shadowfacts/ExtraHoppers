@@ -2,8 +2,8 @@
 	"type": "forge:ore_shaped",
 	"pattern": [
 		"W W",
-		"W W",
-		" B "
+		"WBW",
+		" W "
 	],
 	"key": {
 		"W": {

@@ -2,13 +2,17 @@
 	"type": "forge:ore_shaped",
 	"pattern": [
 		"W W",
-		"W W",
+		"WCW",
 		" W "
 	],
 	"key": {
 		"W": {
 			"type": "forge:ore_dict",
 			"ore": "plankWood"
+		},
+		"C": {
+			"type": "forge:ore_dict",
+			"ore": "chestWood"
 		}
 	},
 	"result": {
