@@ -72,52 +72,6 @@ abstract class TileEntityInventoryHopper(inverted: Boolean, advanced: Boolean, s
 		}
 	}
 
-	private fun push(): Boolean {
-		if (!inventory.isEmpty) {
-			val facing = getHopperFacing()
-			val tile = world.getTileEntity(pos.offset(facing))
-
-			if (tile is ISidedInventory) {
-				val slots = tile.getSlotsForFace(facing.opposite)
-				for (i in slots) {
-					for (slot in 0.until(inventory.slots)) {
-						if (inventory[slot].isEmpty) continue
-						val remainder = tile.insert(inventory.extractItem(slot, 1, true), i)
-						if (remainder.isEmpty) {
-							inventory.extractItem(slot, 1, false)
-							return true
-						}
-					}
-				}
-			} else if (tile is IInventory) {
-				for (i in 0.until(tile.sizeInventory)) {
-					for (slot in 0.until(inventory.slots)) {
-						if (inventory[slot].isEmpty) continue
-						val remainder = tile.insert(inventory.extractItem(slot, 1, true), i)
-						if (remainder.isEmpty) {
-							inventory.extractItem(slot, 1, false)
-							return true
-						}
-					}
-				}
-			} else if (tile != null && tile.hasCapability(ITEM_HANDLER_CAPABILITY, facing.opposite)) {
-				val handler = tile.getCapability(ITEM_HANDLER_CAPABILITY, facing.opposite)!!
-				for (i in 0.until(handler.slots)) {
-					for (slot in 0.until(inventory.slots)) {
-						if (inventory[slot].isEmpty) continue
-						val remainder = handler.insertItem(i, inventory.extractItem(slot, 1, true), false)
-						if (remainder.isEmpty) {
-							inventory.extractItem(slot, 1, false)
-							return true
-						}
-					}
-				}
-			}
-		}
-
-		return false
-	}
-
 	private fun pull(): Boolean {
 		val items = world.getEntitiesWithinAABB(EntityItem::class.java, box)
 		for (item in items) {
@@ -175,9 +129,55 @@ abstract class TileEntityInventoryHopper(inverted: Boolean, advanced: Boolean, s
 			for (i in 0.until(handler.slots)) {
 				for (slot in 0.until(inventory.slots)) {
 					val remainder = inventory.insertItem(slot, handler.extractItem(i, 1, true), false)
-					if (remainder.isEmpty()) {
+					if (remainder.isEmpty) {
 						handler.extractItem(i, 1, false)
 						return true
+					}
+				}
+			}
+		}
+
+		return false
+	}
+
+	private fun push(): Boolean {
+		if (!inventory.isEmpty) {
+			val facing = getHopperFacing()
+			val tile = world.getTileEntity(pos.offset(facing))
+
+			if (tile is ISidedInventory) {
+				val slots = tile.getSlotsForFace(facing.opposite)
+				for (i in slots) {
+					for (slot in 0.until(inventory.slots)) {
+						if (inventory[slot].isEmpty) continue
+						val remainder = tile.insert(inventory.extractItem(slot, 1, true), i)
+						if (remainder.isEmpty) {
+							inventory.extractItem(slot, 1, false)
+							return true
+						}
+					}
+				}
+			} else if (tile is IInventory) {
+				for (i in 0.until(tile.sizeInventory)) {
+					for (slot in 0.until(inventory.slots)) {
+						if (inventory[slot].isEmpty) continue
+						val remainder = tile.insert(inventory.extractItem(slot, 1, true), i)
+						if (remainder.isEmpty) {
+							inventory.extractItem(slot, 1, false)
+							return true
+						}
+					}
+				}
+			} else if (tile != null && tile.hasCapability(ITEM_HANDLER_CAPABILITY, facing.opposite)) {
+				val handler = tile.getCapability(ITEM_HANDLER_CAPABILITY, facing.opposite)!!
+				for (i in 0.until(handler.slots)) {
+					for (slot in 0.until(inventory.slots)) {
+						if (inventory[slot].isEmpty) continue
+						val remainder = handler.insertItem(i, inventory.extractItem(slot, 1, true), false)
+						if (remainder.isEmpty) {
+							inventory.extractItem(slot, 1, false)
+							return true
+						}
 					}
 				}
 			}

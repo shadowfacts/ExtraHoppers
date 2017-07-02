@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.network.NetworkRegistry
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper
 import net.minecraftforge.fml.common.registry.GameRegistry
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
@@ -20,12 +21,16 @@ import net.shadowfacts.extrahoppers.block.inverted.TileEntityInvertedHopper
 import net.shadowfacts.extrahoppers.block.wooden.TileEntityWoodenHopper
 import net.shadowfacts.extrahoppers.block.wooden_fluid.TileEntityWoodenFluidHopper
 import net.shadowfacts.extrahoppers.gui.GUIHandler
+import net.shadowfacts.extrahoppers.network.PacketSetHopperFilterMode
+import net.shadowfacts.extrahoppers.network.PacketSetHopperRedstoneMode
 
 /**
  * @author shadowfacts
  */
 @Mod(modid = MOD_ID, name = NAME, version = VERSION, dependencies = "required-after:shadowmc;", modLanguageAdapter = "net.shadowfacts.forgelin.KotlinAdapter", guiFactory = "net.shadowfacts.extrahoppers.gui.EHGUIFactory")
 object ExtraHoppers {
+
+	lateinit var network: SimpleNetworkWrapper private set
 
 //	Content
 	val blocks = ModBlocks
@@ -36,6 +41,9 @@ object ExtraHoppers {
 		EHConfig.save()
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(ExtraHoppers, GUIHandler)
+		network = NetworkRegistry.INSTANCE.newSimpleChannel(MOD_ID)
+		network.registerMessage(PacketSetHopperRedstoneMode.Handler, PacketSetHopperRedstoneMode::class.java, 0, Side.SERVER)
+		network.registerMessage(PacketSetHopperFilterMode.Handler, PacketSetHopperFilterMode::class.java, 1, Side.SERVER)
 	}
 
 	@Mod.EventHandler
