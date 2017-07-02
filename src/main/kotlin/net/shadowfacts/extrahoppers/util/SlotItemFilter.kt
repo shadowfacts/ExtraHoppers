@@ -7,4 +7,10 @@ import net.shadowfacts.extrahoppers.util.filter.ItemFilter
 /**
  * @author shadowfacts
  */
-class SlotItemFilter(hopper: TileEntityInventoryHopper, id: Int, x: Int, y: Int): SlotItemHandler((hopper.filter as ItemFilter).inventory, id, x, y)
+class SlotItemFilter(val hopper: TileEntityInventoryHopper, id: Int, x: Int, y: Int): SlotItemHandler((hopper.filter as ItemFilter).inventory, id, x, y) {
+
+	override fun onSlotChanged() {
+		hopper.markDirty()
+	}
+
+}

@@ -51,11 +51,40 @@ class ContainerInventoryHopper(val hopper: TileEntityInventoryHopper, playerInv:
 		return super.slotClick(id, dragType, type, player)
 	}
 
-	override fun transferStackInSlot(player: EntityPlayer, index: Int): ItemStack {
+	override fun transferStackInSlot(player: EntityPlayer?, index: Int): ItemStack {
 		if (index in hopper.inventory.slots..hopper.inventory.slots + 5) { // if the slot is a filter slot
 			return ItemStack.EMPTY
 		}
-		return super.transferStackInSlot(player, index)
+
+		var itemstack = ItemStack.EMPTY
+		val slot = inventorySlots[index]
+
+		if (slot != null && slot.hasStack) {
+			val itemstack1 = slot.stack
+			itemstack = itemstack1.copy()
+
+			if (index < hopper.inventory.slots) {
+				if (!this.mergeItemStack(itemstack1, hopper.inventory.slots + 6, inventorySlots.size, true)) {
+					return ItemStack.EMPTY
+				}
+			} else if (!this.mergeItemStack(itemstack1, 0, hopper.inventory.slots, false)) {
+				return ItemStack.EMPTY
+			}
+
+			if (itemstack1.count == 0) {
+				slot.putStack(ItemStack.EMPTY)
+			} else {
+				slot.onSlotChanged()
+			}
+
+			if (itemstack1.count == itemstack.count) {
+				return ItemStack.EMPTY
+			}
+
+			slot.onTake(player, itemstack1)
+		}
+
+		return itemstack
 	}
 
 	private class SlotHopper(val hopper: TileEntityInventoryHopper, index: Int, x: Int, y: Int): SlotItemHandler(hopper.inventory, index, x, y) {
