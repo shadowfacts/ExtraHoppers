@@ -6,7 +6,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext
-import net.shadowfacts.extrahoppers.block.advanced.TileEntityAdvancedHopper
+import net.shadowfacts.extrahoppers.block.base.TileEntityHopperBase
 import net.shadowfacts.shadowmc.util.RedstoneMode
 
 /**
@@ -24,7 +24,7 @@ class PacketSetHopperRedstoneMode(): IMessage {
 		this.mode = mode
 	}
 
-	constructor(tile: TileEntityAdvancedHopper): this(tile.world.provider.dimension, tile.pos, tile.mode)
+	constructor(tile: TileEntityHopperBase<*>): this(tile.world.provider.dimension, tile.pos, tile.mode)
 
 	override fun toBytes(buf: ByteBuf) {
 		buf.writeInt(dim)
@@ -43,7 +43,7 @@ class PacketSetHopperRedstoneMode(): IMessage {
 		override fun onMessage(message: PacketSetHopperRedstoneMode, ctx: MessageContext): IMessage? {
 			val world = FMLCommonHandler.instance().minecraftServerInstance.getWorld(message.dim)
 			val tile = world.getTileEntity(message.pos)
-			if (tile is TileEntityAdvancedHopper) {
+			if (tile is TileEntityHopperBase<*>) {
 				tile.mode = message.mode
 				tile.markDirty()
 			}

@@ -17,7 +17,7 @@ abstract class TileEntityHopperBase<T>(var inverted: Boolean, var advanced: Bool
 	var mode = RedstoneMode.LOW
 	private var prevPowered = false
 
-	var filterMode = FilterMode.WHITELIST
+	var filterMode = FilterMode.BLACKLIST
 	abstract var filter: Filter<T>
 
 	constructor(): this(false, false)

@@ -8,6 +8,8 @@ import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY
 import net.minecraftforge.fluids.capability.IFluidHandler
+import net.shadowfacts.extrahoppers.util.getFluidHandler
+import net.shadowfacts.extrahoppers.util.hasFluidHandler
 import net.shadowfacts.forgelin.extensions.forEach
 
 /**
@@ -21,13 +23,8 @@ class FluidFilter(size: Int): Filter<FluidStack>() {
 		if (stack.isEmpty) {
 			filter[i] = null
 		} else {
-			val handler: IFluidHandler = if (stack.hasCapability(FLUID_HANDLER_CAPABILITY, null)) {
-				stack.getCapability(FLUID_HANDLER_CAPABILITY, null)!!
-			} else if (stack.hasCapability(FLUID_HANDLER_ITEM_CAPABILITY, null)) {
-				stack.getCapability(FLUID_HANDLER_ITEM_CAPABILITY, null)!!
-			} else {
-				return
-			}
+			if (!stack.hasFluidHandler()) return
+			val handler = stack.getFluidHandler()
 			filter[i] = handler.tankProperties[0].contents?.copy()
 		}
 	}

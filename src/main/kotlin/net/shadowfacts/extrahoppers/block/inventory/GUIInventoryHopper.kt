@@ -52,15 +52,6 @@ class GUIInventoryHopper(container: Container, tile: TileEntityInventoryHopper):
 				add(UIFixedView(83, 86, "filter-container").apply {
 					add(UIImage(FILTER_BG, 83, 86, "filter-bg"))
 
-//					add(UIFixedView(52, 37, "filter-slots").apply {
-//						for (i in 0..2) {
-//							add(UIItemFilterSlot(tile, i, "filter-slot-$i", "filter-slot-top"))
-//						}
-//						for (i in 3..5) {
-//							add(UIItemFilterSlot(tile, i, "filter-slot-$i", "filter-slot-bottom"))
-//						}
-//					})
-
 					add(UIFixedView(83, 34, "filter-bottom").apply {
 						add(UIButtonEnum<FilterMode>(tile.filterMode, Function(FilterMode::localize), Consumer {
 							tile.filterMode = it.value

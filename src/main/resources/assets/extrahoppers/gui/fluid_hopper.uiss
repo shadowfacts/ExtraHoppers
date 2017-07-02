@@ -2,12 +2,27 @@
 	vertical-layout: top
 }
 
-#mode {
+#filter {
 	horizontal-layout: left
-	margin-left: 20
+	margin-left: 12
+	vertical-layout: top
+	margin-top: 18
 }
 
-#filter {
+#mode {
 	horizontal-layout: right
-	margin-right: 20
+	margin-right: 12
+	vertical-layout: top
+	margin-top: 18
+}
+
+#filter-container {
+	horizontal-layout: left
+	vertical-layout: top
+	margin-left: 4
+}
+
+#filter-bottom {
+	vertical-layout: bottom
+	margin-bottom: 3
 }
