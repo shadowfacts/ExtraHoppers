@@ -6,6 +6,7 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import net.minecraftforge.fml.relauncher.Side
 import net.shadowfacts.extrahoppers.EHConfig
 import net.shadowfacts.extrahoppers.MOD_ID
 import net.shadowfacts.extrahoppers.gui.GUIHandler
@@ -13,7 +14,7 @@ import net.shadowfacts.extrahoppers.gui.GUIHandler
 /**
  * @author shadowfacts
  */
-@Mod.EventBusSubscriber(modid = MOD_ID)
+@Mod.EventBusSubscriber(Side.CLIENT, modid = MOD_ID)
 object ClientEventHandler {
 
 	@JvmStatic
