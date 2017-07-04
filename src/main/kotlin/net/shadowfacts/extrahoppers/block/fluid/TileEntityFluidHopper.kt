@@ -55,15 +55,6 @@ open class TileEntityFluidHopper(inverted: Boolean, advanced: Boolean): TileEnti
 	val ioInventory = object: ItemStackHandler(2) {
 		override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
 			if (!stack.hasFluidHandler()) return stack
-//			val stackHandler = stack.getFluidHandler()
-//			when (slot) {
-//				0 -> { // insert fluid
-//					if (stackHandler.drain(tank.fill(stackHandler.drain(tank.capacity - tank.fluidAmount, false), false), false) == null) return stack
-//				}
-//				1 -> { // extract fluid
-//					if (tank.drain(stackHandler.fill(tank.drain(tank.fluidAmount, false), false), false) == null) return stack
-//				}
-//			}
 			return super.insertItem(slot, stack, simulate)
 		}
 	}
